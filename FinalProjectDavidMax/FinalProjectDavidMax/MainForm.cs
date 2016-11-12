@@ -16,5 +16,28 @@ namespace FinalProjectDavidMax
         {
             InitializeComponent();
         }
+
+        // Click Button
+        public void click(object sender, EventArgs e)
+        {
+            switch (((Button)sender).Name) {
+
+            
+                case "btnOpenOriginal" :
+                    BusinessPresentation.getInstance().ClickLoad(picPreview);
+                    break;
+
+                case "btnSaveNewImage":
+                    BusinessPresentation.getInstance().ClickSave(picPreview);
+                    break;
+
+                case "btnFilter":
+                    BusinessPresentation.getInstance().ClickFilter(picPreview);
+                    break;
+
+            }
+        }
+
+
     }
 }
