@@ -8,7 +8,7 @@ using System.Windows.Forms;
 
 namespace FinalProjectDavidMax
 {
-    interface IDisplay
+    public interface IDisplay
     {
         Bitmap getImage(PictureBox pictureBox);
 

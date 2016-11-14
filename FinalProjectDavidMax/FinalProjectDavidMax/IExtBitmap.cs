@@ -7,8 +7,9 @@ using System.Threading.Tasks;
 
 namespace FinalProjectDavidMax
 {
-    public interface ILoad
+    public interface IExtBitmap
     {
-        Bitmap LoadImage();
+        Bitmap Laplacian3x3Filter(Bitmap sourceBitmap,
+                                                    bool grayscale = true);
     }
 }

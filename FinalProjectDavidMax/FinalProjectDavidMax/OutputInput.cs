@@ -31,7 +31,7 @@ namespace FinalProjectDavidMax
             return workImage;
         }
 
-        public void SaveImage(Bitmap result)
+        public string SaveImage(Bitmap result)
         {
             if (result != null)
             {
@@ -61,7 +61,11 @@ namespace FinalProjectDavidMax
 
                     
                 }
+
+                return sfd.FileName;
             }
+
+            return null;
         }
     }
 }

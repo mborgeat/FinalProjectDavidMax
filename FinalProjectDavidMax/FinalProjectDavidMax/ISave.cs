@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 
 namespace FinalProjectDavidMax
 {
-    interface ISave
+    public interface ISave
     {
-        void SaveImage(Bitmap result);
+        string SaveImage(Bitmap result);
     }
 }

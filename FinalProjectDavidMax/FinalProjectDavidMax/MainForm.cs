@@ -17,11 +17,10 @@ namespace FinalProjectDavidMax
             InitializeComponent();
         }
 
-        // Click Button
+        // Method for the on-click listener
         public void click(object sender, EventArgs e)
         {
             switch (((Button)sender).Name) {
-
             
                 case "btnOpenOriginal" :
                     BusinessPresentation.getInstance().ClickLoad(picPreview);

@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace FinalProjectDavidMax
 {
-    public static class ExtBitmap
+    public class ExtBitmap : IExtBitmap
     {
         
 
@@ -140,7 +140,7 @@ namespace FinalProjectDavidMax
 
         
 
-        public static Bitmap Laplacian3x3Filter(this Bitmap sourceBitmap,
+        public Bitmap Laplacian3x3Filter(Bitmap sourceBitmap,
                                                     bool grayscale = true)
         {
             Bitmap resultBitmap = ExtBitmap.ConvolutionFilter(sourceBitmap,
