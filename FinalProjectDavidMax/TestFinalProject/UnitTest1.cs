@@ -7,9 +7,11 @@ using System.Windows.Forms;
 
 namespace TestFinalProject
 {
+    
     [TestClass]
     public class UnitTest1
     {
+        /*
         // Test of the ClickLoad in Business layer
         public void TestLoad()
         {
@@ -38,6 +40,10 @@ namespace TestFinalProject
 
             save.Received(1).SaveImage(Arg.Any<Bitmap>());
         }
+        */
+
+        
+        
 
         // Test of the ClickFilter in Business layer
         [TestMethod()]
@@ -63,7 +69,7 @@ namespace TestFinalProject
 
             // Control the size of images
             Assert.AreEqual(bp.FilteredBitmap.Size, controlPicture.Size);
-            
+
             // Control each pixel
             for (int i = 0; i < controlPicture.Width; i++)
             {
@@ -74,6 +80,7 @@ namespace TestFinalProject
             }
         }
 
+        // This method throws an exception in ClickFilter
         [TestMethod()]
         public void TestExceptionInClickFilter()
         {
@@ -81,21 +88,18 @@ namespace TestFinalProject
             var display = Substitute.For<IDisplay>();
             var extBitmap = Substitute.For<IExtBitmap>();
 
-            // Get the instance of BusinessPresentation
+            // Get the instance of BusinessPresentation and reinitialise the filtered bitmap
             BusinessPresentation bp = BusinessPresentation.getInstance();
+            bp.FilteredBitmap = null;
 
             // Get a fake picture from the form
             PictureBox fakePictureBox = new PictureBox();
             fakePictureBox.Image = Properties.Resources.firefox;
             display.getImage(Arg.Any<PictureBox>()).Returns(fakePictureBox.Image);
+            bp.setExtBitmap(extBitmap);
 
             // Throw exception
-            /*
-            extBitmap
-                .When(x => x.Laplacian3x3Filter(Arg.Any<Bitmap>(), false))
-                .Do(x => { throw new Exception(); });
-           */
-            extBitmap.Laplacian3x3Filter(Arg.Any<Bitmap>(), false).Returns(x => { throw new Exception(); });
+            extBitmap.Laplacian3x3Filter(Arg.Any<Bitmap>(), false).ReturnsForAnyArgs(x => { throw new Exception(); });
 
             try
             {
@@ -104,13 +108,12 @@ namespace TestFinalProject
             }
             catch (Exception)
             {
-                Assert.Fail("blabla");
+                Assert.Fail("The picture was note filtered");
             }
-
-            
 
             // The filtered picture must be null
             Assert.IsNull(bp.FilteredBitmap);
         }
+
     }
 }

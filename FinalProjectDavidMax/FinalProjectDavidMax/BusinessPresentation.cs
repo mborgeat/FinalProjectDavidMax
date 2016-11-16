@@ -14,6 +14,7 @@ namespace FinalProjectDavidMax
         private static OutputInput outputInput;
         private static Bitmap originalBitmap = null;
         private Bitmap filteredBitmap = null;
+        private IExtBitmap extBitmap;
 
        
 
@@ -21,6 +22,7 @@ namespace FinalProjectDavidMax
         private BusinessPresentation()
         {
             outputInput = new OutputInput();
+            extBitmap = new ExtBitmap();
         }
 
         public static BusinessPresentation getInstance()
@@ -45,6 +47,11 @@ namespace FinalProjectDavidMax
             }
         }
 
+        public void setExtBitmap(IExtBitmap extBitmap)
+        {
+            this.extBitmap = extBitmap;
+        }
+
         //  Click methods
 
         // Click on Filter
@@ -62,10 +69,9 @@ namespace FinalProjectDavidMax
             try
             {
                 // Apply the filter
-                IExtBitmap extBitmap = new ExtBitmap();
                 workImage = extBitmap.Laplacian3x3Filter(workImage, false);
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 // If there is an exception in the filter, do nothing in the form; filtered image remains null
                 return;
