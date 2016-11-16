@@ -104,8 +104,10 @@ namespace TestFinalProject
             // Get the instance of BusinessPresentation
             BusinessPresentation bp = BusinessPresentation.getInstance();
 
-            // Create a fake picture preview picture box, without picture
+            // Create a fake picture preview picture box, with a null picture
             PictureBox fakePictureBox = new PictureBox();
+            fakePictureBox.Image = null;
+            display.getImage(Arg.Any<PictureBox>()).Returns(fakePictureBox.Image);
 
             // Apply the filter
             string response = bp.ClickFilter(fakePictureBox);
