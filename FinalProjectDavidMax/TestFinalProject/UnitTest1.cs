@@ -80,6 +80,40 @@ namespace TestFinalProject
             }
         }
 
+        // Test of the ClickFilter with a null picture box
+        [TestMethod()]
+        public void TestClickFilterWithNullPictureBox()
+        {
+            // Get the instance of BusinessPresentation
+            BusinessPresentation bp = BusinessPresentation.getInstance();
+
+            // Apply the filter with a null parameter
+            string response = bp.ClickFilter(null);
+
+            // Control the response
+            Assert.AreEqual(response, "parameter picture box is null");
+        }
+
+        [TestMethod()]
+        // Test of the ClickFilter with a null picture in the box (which is not null)
+        public void TestClickFilterWithNullPicture()
+        {
+            // Create a stubstitute for the interface
+            var display = Substitute.For<IDisplay>();
+
+            // Get the instance of BusinessPresentation
+            BusinessPresentation bp = BusinessPresentation.getInstance();
+
+            // Create a fake picture preview picture box, without picture
+            PictureBox fakePictureBox = new PictureBox();
+
+            // Apply the filter
+            string response = bp.ClickFilter(fakePictureBox);
+
+            // Control the response
+            Assert.AreEqual(response, "picture is null");
+        }
+
         // This method throws an exception in ClickFilter
         [TestMethod()]
         public void TestExceptionInClickFilter()

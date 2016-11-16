@@ -55,15 +55,21 @@ namespace FinalProjectDavidMax
         //  Click methods
 
         // Click on Filter
-        public void ClickFilter(PictureBox picPreview)
+        public string ClickFilter(PictureBox picPreview)
         {
+            // If picPreview is null, do nothing...
+            if (picPreview == null)
+            {
+                return "parameter picture box is null";
+            }
+
             // Get the image from the form
             Bitmap workImage = getImage(picPreview);
 
             // If there is no image in the PictureBox, do nothing
             if (workImage == null)
             {
-                return;
+                return "picture is null";
             }
 
             try
@@ -74,7 +80,7 @@ namespace FinalProjectDavidMax
             catch (Exception)
             {
                 // If there is an exception in the filter, do nothing in the form; filtered image remains null
-                return;
+                return "an exception was thrown by applying the filter";
             }
            
             // Put the filtered image in the form
@@ -82,6 +88,8 @@ namespace FinalProjectDavidMax
 
             // Keep the filtered image in this
             FilteredBitmap = workImage;
+
+            return "filter successfull applyied";
         }
 
         // Click on Load image
