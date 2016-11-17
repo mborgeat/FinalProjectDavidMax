@@ -43,6 +43,7 @@ namespace FinalProjectDavidMax
             }
         }
 
+
         public void setExtBitmap(IExtBitmap extBitmap)
         {
             this.extBitmap = extBitmap;
@@ -73,7 +74,7 @@ namespace FinalProjectDavidMax
                 // Apply the filter
                 workImage = extBitmap.Laplacian3x3Filter(workImage);
                 // Keep the filtered image in this
-                FilteredBitmap = workImage;
+                filteredBitmap = workImage;
             }
             catch (Exception)
             {

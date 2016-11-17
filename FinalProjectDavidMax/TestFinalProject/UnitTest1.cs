@@ -27,22 +27,44 @@ namespace TestFinalProject
             ExtBitmap eb = new ExtBitmap();
 
             // Execution of the method
-            Bitmap resultImage = eb.Laplacian3x3Filter(startPicture);
+            Bitmap resultPicture = eb.Laplacian3x3Filter(startPicture);
 
             // Test the size of result image
-            Assert.AreEqual(resultImage.Size, startPicture.Size);
+            Assert.AreEqual(resultPicture.Size, startPicture.Size);
 
             // Control each pixel
             for (int i = 0; i < controlPicture.Width; i++)
             {
                 for (int j = 0; j < controlPicture.Height; j++)
                 {
-                    Assert.AreEqual(startPicture.GetPixel(i, j), controlPicture.GetPixel(i, j));
+                    Assert.AreEqual(resultPicture.GetPixel(i, j), controlPicture.GetPixel(i, j));
                 }
             }
         }
 
+        // Test of the ClickFilter with all correct
+        [TestMethod()]
+        public void TestClickFilter()
+        {
+            // Create a substitute for all interface
+            var display = Substitute.For<IDisplay>();
+            var extBitmap = Substitute.For<IExtBitmap>();
+            var iLoad = Substitute.For<ILoad>();
+            var iSave = Substitute.For<ISave>();
 
+            // Get the instance of BusinessPresentation
+            BusinessPresentation bp = new BusinessPresentation(iLoad, iSave, extBitmap, display);
+
+            // Make a fake picture box with a fake picture
+            PictureBox fakePictureBox = new PictureBox();
+            fakePictureBox.Image = Properties.Resources.firefox;
+            display.getImage(Arg.Any<PictureBox>()).Returns(fakePictureBox.Image);
+
+            Assert.AreEqual("filter successfull applyied", bp.ClickFilter(fakePictureBox));
+            
+
+
+        }
 
 
        
