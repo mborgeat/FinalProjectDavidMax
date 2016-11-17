@@ -15,36 +15,32 @@ namespace TestFinalProject
 
 
 
-        /*
-        // Test of the ClickLoad in Business layer
-        public void TestLoad()
-        {
-            // Create a substitute for the interfaces
-            var display = Substitute.For<IDisplay>();
-            var load = Substitute.For<ILoad>();
-        }
-
-        // Test of the ClickSave in Business layer
+        // Test of ExtBitmap method Laplacian 3x3
         [TestMethod()]
-        public void TestClickSave()
+        public void TestLaplacian3x3()
         {
-            // Create a substitute for the interfaces
-            var display = Substitute.For<IDisplay>();
-            var save = Substitute.ForPartsOf<ISave>();
+            // Definition of start image and control image
+            Bitmap startPicture = Properties.Resources.firefox;
+            Bitmap controlPicture = Properties.Resources.firefox_filtered;
 
-            // Get the instance of BusinessPresentation
-            BusinessPresentation bp = BusinessPresentation.getInstance();
+            // Instanciation of a ExtBitmap
+            ExtBitmap eb = new ExtBitmap();
 
-            // Create a fake picture box
-            PictureBox fakePictureBox = new PictureBox();
-            fakePictureBox.Image = Properties.Resources.firefox;
-            display.getImage(Arg.Any<PictureBox>()).Returns(fakePictureBox.Image);
-            
-            bp.ClickSave(fakePictureBox);
+            // Execution of the method
+            Bitmap resultImage = eb.Laplacian3x3Filter(startPicture);
 
-            save.Received(1).SaveImage(Arg.Any<Bitmap>());
+            // Test the size of result image
+            Assert.AreEqual(resultImage.Size, startPicture.Size);
+
+            // Control each pixel
+            for (int i = 0; i < controlPicture.Width; i++)
+            {
+                for (int j = 0; j < controlPicture.Height; j++)
+                {
+                    Assert.AreEqual(startPicture.GetPixel(i, j), controlPicture.GetPixel(i, j));
+                }
+            }
         }
-        */
 
 
 
