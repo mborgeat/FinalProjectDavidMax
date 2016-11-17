@@ -197,32 +197,7 @@ namespace TestFinalProject
             Assert.AreEqual(bp.iHaveException, true);
         }
 
-        //test method clickLoad with fake exception on putImage
-        [TestMethod()]
-        public void TestClickLoadWithExcpetionNullException()
-        {
-            // Create a substitute for all interface
-            var display = Substitute.For<IDisplay>();
-            var extBitmap = Substitute.For<IExtBitmap>();
-            var iLoad = Substitute.For<ILoad>();
-            var iSave = Substitute.For<ISave>();
-            // Get the instance of BusinessPresentation
-            BusinessPresentation bp = new BusinessPresentation(iLoad, iSave, extBitmap, display);
-
-            // Get a fake picture from the form
-            PictureBox fakePictureBox = new PictureBox();
-            Bitmap imageTemp = Properties.Resources.firefox;
-
-            //instructions to NSubstitute : Throw an exception
-            display
-                .When(x => x.putImage(fakePictureBox, imageTemp))
-               .Do(x => { throw new Exception(); });
-
-            bp.ClickLoad(fakePictureBox);
-
-            //access to internal variables of the class
-            Assert.AreEqual(bp.iHaveException, true);
-        }
+        
 
 
         //test method clickSave with no exception
@@ -273,34 +248,7 @@ namespace TestFinalProject
             //access to internal variables of the class
             Assert.AreEqual(bp.iHaveException, true);
         }
-
-        //test method clickLoad with fake exception on putImage
-        [TestMethod()]
-        public void TestClickSaveWithNullExcpetionOnSaveImage()
-        {
-            // Create a substitute for all interface
-            var display = Substitute.For<IDisplay>();
-            var extBitmap = Substitute.For<IExtBitmap>();
-            var iLoad = Substitute.For<ILoad>();
-            var iSave = Substitute.For<ISave>();
-            // Get the instance of BusinessPresentation
-            BusinessPresentation bp = new BusinessPresentation(iLoad, iSave, extBitmap, display);
-
-            // Get a fake picture from the form
-            PictureBox fakePictureBox = new PictureBox();
-            fakePictureBox.Image = Properties.Resources.firefox;
-            Bitmap imageTemp = Properties.Resources.firefox;
-
-            //instructions to NSubstitute : Throw an exception
-            iSave
-                .When(x => x.SaveImage(imageTemp))
-               .Do(x => { throw new Exception(); });
-
-            bp.ClickSave(fakePictureBox);
-
-            //access to internal variables of the class
-            Assert.AreEqual(bp.iHaveException, true);
-        }
+        
 
     }
 }
