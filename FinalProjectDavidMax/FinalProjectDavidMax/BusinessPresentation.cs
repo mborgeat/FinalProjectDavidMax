@@ -12,6 +12,7 @@ namespace FinalProjectDavidMax
     {
         private static Bitmap originalBitmap = null;
         private Bitmap filteredBitmap = null;
+        private Bitmap workImage = null;
         private IExtBitmap extBitmap;
         private IDisplay display;
         private ILoad iLoad;
@@ -92,13 +93,22 @@ namespace FinalProjectDavidMax
         public void ClickLoad(PictureBox picPreview)
         {
             iHaveException = false;
-
             // Get the image from the disk
             try
             {
                 // call function for get the image from the disk
-                Bitmap workImage = iLoad.LoadImage();
-                // If image is not null, put it in the form
+                workImage = iLoad.LoadImage();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("{0} First exception caught.", e);
+                iHaveException = true;
+            }
+
+
+            // If image is not null, put it in the form
+            try
+            {
                 display.putImage(picPreview, workImage);
 
                 // Save the non filtered image - just in case we need it in a next release
@@ -106,13 +116,8 @@ namespace FinalProjectDavidMax
             }
             catch (ArgumentNullException e)
             {
-                Console.WriteLine("{0} First exception caught.", e);
-                iHaveException = true;
-            }
-            catch (Exception e)
-            {
                 // If there is an exception in the filter, do nothing 
-                Console.WriteLine("in the exception", e);
+                Console.WriteLine("{1} First exception caught.", e);
                 iHaveException = true;
             }
 
@@ -128,23 +133,25 @@ namespace FinalProjectDavidMax
             {
                 // Get the image from the form
                 Bitmap workImage = display.getImage(picPreview);
-
-                try
-                {
-                    // Save the image on the disk
-                    iSave.SaveImage(workImage);
-                }
-                catch (Exception e)
-                {
-                    // If there is an exception in the filter, do nothing 
-                    Console.WriteLine("in the exception", e);
-                    iHaveException = true;
-                }
+                
             }
             catch (Exception e)
             {
                 // If there is an exception in the filter, do nothing 
-                Console.WriteLine("in the exception", e);
+                Console.WriteLine("{0} First exception caught.", e);
+                iHaveException = true;
+            }
+
+            // Save the image on the disk
+            try
+            {
+                iSave.SaveImage(workImage);
+
+            }
+            catch (ArgumentNullException e)
+            {
+                // If there is an exception in the filter, do nothing 
+                Console.WriteLine("{1} First exception caught.", e);
                 iHaveException = true;
             }
 

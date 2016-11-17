@@ -11,12 +11,7 @@ namespace TestFinalProject
     [TestClass]
     public class UnitTest1
     {
-        private static IDisplay display = Substitute.For<IDisplay>();
-        private static IExtBitmap extBitmap = Substitute.For<IExtBitmap>();
-        private static ILoad iLoad = Substitute.For<ILoad>();
-        private static ISave iSave = Substitute.For<ISave>();
 
-        // Create a substitute for all interface
 
 
 
@@ -58,6 +53,11 @@ namespace TestFinalProject
         [TestMethod()]
         public void TestClickFilter()
         {
+            // Create a substitute for all interface
+            var display = Substitute.For<IDisplay>();
+            var extBitmap = Substitute.For<IExtBitmap>();
+            var iLoad = Substitute.For<ILoad>();
+            var iSave = Substitute.For<ISave>();
             // Get the instance of BusinessPresentation
             BusinessPresentation bp = new BusinessPresentation(iLoad, iSave, extBitmap, display);
 
@@ -90,6 +90,11 @@ namespace TestFinalProject
         [TestMethod()]
         public void TestClickFilterWithNullPictureBox()
         {
+            // Create a substitute for all interface
+            var display = Substitute.For<IDisplay>();
+            var extBitmap = Substitute.For<IExtBitmap>();
+            var iLoad = Substitute.For<ILoad>();
+            var iSave = Substitute.For<ISave>();
             // Get the instance of BusinessPresentation
             BusinessPresentation bp = new BusinessPresentation(iLoad, iSave, extBitmap, display);
             // Apply the filter with a null parameter
@@ -103,6 +108,11 @@ namespace TestFinalProject
         // Test of the ClickFilter with a null picture in the box (which is not null)
         public void TestClickFilterWithNullPicture()
         {
+            // Create a substitute for all interface
+            var display = Substitute.For<IDisplay>();
+            var extBitmap = Substitute.For<IExtBitmap>();
+            var iLoad = Substitute.For<ILoad>();
+            var iSave = Substitute.For<ISave>();
             // Get the instance of BusinessPresentation
             BusinessPresentation bp = new BusinessPresentation(iLoad, iSave, extBitmap, display);
             // Create a fake picture preview picture box, with a null picture
@@ -121,6 +131,11 @@ namespace TestFinalProject
         [TestMethod()]
         public void TestExceptionInClickFilter()
         {
+            // Create a substitute for all interface
+            var display = Substitute.For<IDisplay>();
+            var extBitmap = Substitute.For<IExtBitmap>();
+            var iLoad = Substitute.For<ILoad>();
+            var iSave = Substitute.For<ISave>();
             // Get the instance of BusinessPresentation
             BusinessPresentation bp = new BusinessPresentation(iLoad, iSave, extBitmap, display);
             bp.FilteredBitmap = null;
@@ -154,6 +169,11 @@ namespace TestFinalProject
         [TestMethod]
         public void TestClickLoadWithNoException()
         {
+            // Create a substitute for all interface
+            var display = Substitute.For<IDisplay>();
+            var extBitmap = Substitute.For<IExtBitmap>();
+            var iLoad = Substitute.For<ILoad>();
+            var iSave = Substitute.For<ISave>();
             // Get the instance of BusinessPresentation
             BusinessPresentation bp = new BusinessPresentation(iLoad, iSave, extBitmap, display);
 
@@ -171,10 +191,11 @@ namespace TestFinalProject
         [TestMethod()]
         public void TestClickLoadWithExcpetionOnLoadImage()
         {
-            display = Substitute.For<IDisplay>();
-            extBitmap = Substitute.For<IExtBitmap>();
-            iLoad = Substitute.For<ILoad>();
-            iSave = Substitute.For<ISave>();
+            // Create a substitute for all interface
+            var display = Substitute.For<IDisplay>();
+            var extBitmap = Substitute.For<IExtBitmap>();
+            var iLoad = Substitute.For<ILoad>();
+            var iSave = Substitute.For<ISave>();
             // Get the instance of BusinessPresentation
             BusinessPresentation bp = new BusinessPresentation(iLoad, iSave, extBitmap, display);
 
@@ -195,12 +216,13 @@ namespace TestFinalProject
 
         //test method clickLoad with fake exception on putImage
         [TestMethod()]
-        public void TestClickLoadWithExcpetionOnPutImage()
+        public void TestClickLoadWithExcpetion()
         {
-            display = Substitute.For<IDisplay>();
-            extBitmap = Substitute.For<IExtBitmap>();
-            iLoad = Substitute.For<ILoad>();
-            iSave = Substitute.For<ISave>();
+            // Create a substitute for all interface
+            var display = Substitute.For<IDisplay>();
+            var extBitmap = Substitute.For<IExtBitmap>();
+            var iLoad = Substitute.For<ILoad>();
+            var iSave = Substitute.For<ISave>();
             // Get the instance of BusinessPresentation
             BusinessPresentation bp = new BusinessPresentation(iLoad, iSave, extBitmap, display);
 
@@ -211,7 +233,7 @@ namespace TestFinalProject
             //instructions to NSubstitute : Throw an exception
             display
                 .When(x => x.putImage(fakePictureBox, imageTemp))
-               .Do(x => { throw new Exception(); });
+               .Do(x => { throw new ArgumentNullException(); });
 
             bp.ClickLoad(fakePictureBox);
 
@@ -224,6 +246,11 @@ namespace TestFinalProject
         [TestMethod]
         public void TestClickSaveWithNoException()
         {
+            // Create a substitute for all interface
+            var display = Substitute.For<IDisplay>();
+            var extBitmap = Substitute.For<IExtBitmap>();
+            var iLoad = Substitute.For<ILoad>();
+            var iSave = Substitute.For<ISave>();
             // Get the instance of BusinessPresentation
             BusinessPresentation bp = new BusinessPresentation(iLoad, iSave, extBitmap, display);
 
@@ -241,12 +268,13 @@ namespace TestFinalProject
         [TestMethod()]
         public void TestClickSaveWithExcpetionOnGetImage()
         {
-        display = Substitute.For<IDisplay>();
-        extBitmap = Substitute.For<IExtBitmap>();
-        iLoad = Substitute.For<ILoad>();
-        iSave = Substitute.For<ISave>();
-        // Get the instance of BusinessPresentation
-        BusinessPresentation bp = new BusinessPresentation(iLoad, iSave, extBitmap, display);
+            // Create a substitute for all interface
+            var display = Substitute.For<IDisplay>();
+            var extBitmap = Substitute.For<IExtBitmap>();
+            var iLoad = Substitute.For<ILoad>();
+            var iSave = Substitute.For<ISave>();
+            // Get the instance of BusinessPresentation
+            BusinessPresentation bp = new BusinessPresentation(iLoad, iSave, extBitmap, display);
 
             // Get a fake picture from the form
             PictureBox fakePictureBox = new PictureBox();
@@ -267,10 +295,11 @@ namespace TestFinalProject
         [TestMethod()]
         public void TestClickSaveWithNullExcpetionOnSaveImage()
         {
-            display = Substitute.For<IDisplay>();
-            extBitmap = Substitute.For<IExtBitmap>();
-            iLoad = Substitute.For<ILoad>();
-            iSave = Substitute.For<ISave>();
+            // Create a substitute for all interface
+            var display = Substitute.For<IDisplay>();
+            var extBitmap = Substitute.For<IExtBitmap>();
+            var iLoad = Substitute.For<ILoad>();
+            var iSave = Substitute.For<ISave>();
             // Get the instance of BusinessPresentation
             BusinessPresentation bp = new BusinessPresentation(iLoad, iSave, extBitmap, display);
 
