@@ -135,7 +135,7 @@ namespace TestFinalProject
             bp.setExtBitmap(extBitmap);
 
             // Throw exception
-            extBitmap.Laplacian3x3Filter(Arg.Any<Bitmap>(), false).ReturnsForAnyArgs(x => { throw new Exception(); });
+            extBitmap.Laplacian3x3Filter(Arg.Any<Bitmap>()).ReturnsForAnyArgs(x => { throw new Exception(); });
 
             try
             {

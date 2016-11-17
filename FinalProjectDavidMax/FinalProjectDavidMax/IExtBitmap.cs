@@ -9,7 +9,6 @@ namespace FinalProjectDavidMax
 {
     public interface IExtBitmap
     {
-        Bitmap Laplacian3x3Filter(Bitmap sourceBitmap,
-                                                    bool grayscale = true);
+        Bitmap Laplacian3x3Filter(Bitmap sourceBitmap);
     }
 }

@@ -75,7 +75,7 @@ namespace FinalProjectDavidMax
             try
             {
                 // Apply the filter
-                workImage = extBitmap.Laplacian3x3Filter(workImage, false);
+                workImage = extBitmap.Laplacian3x3Filter(workImage);
             }
             catch (Exception)
             {

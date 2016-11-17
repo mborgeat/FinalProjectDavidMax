@@ -16,8 +16,7 @@ namespace FinalProjectDavidMax
         private static Bitmap ConvolutionFilter(Bitmap sourceBitmap,
                                              double[,] filterMatrix,
                                                   double factor = 1,
-                                                       int bias = 0,
-                                             bool grayscale = false)
+                                                       int bias = 0)
         {
             BitmapData sourceData = sourceBitmap.LockBits(new Rectangle(0, 0,
                                      sourceBitmap.Width, sourceBitmap.Height),
@@ -29,24 +28,6 @@ namespace FinalProjectDavidMax
 
             Marshal.Copy(sourceData.Scan0, pixelBuffer, 0, pixelBuffer.Length);
             sourceBitmap.UnlockBits(sourceData);
-
-            if (grayscale == true)
-            {
-                float rgb = 0;
-
-                for (int k = 0; k < pixelBuffer.Length; k += 4)
-                {
-                    rgb = pixelBuffer[k] * 0.11f;
-                    rgb += pixelBuffer[k + 1] * 0.59f;
-                    rgb += pixelBuffer[k + 2] * 0.3f;
-
-
-                    pixelBuffer[k] = (byte)rgb;
-                    pixelBuffer[k + 1] = pixelBuffer[k];
-                    pixelBuffer[k + 2] = pixelBuffer[k];
-                    pixelBuffer[k + 3] = 255;
-                }
-            }
 
             double blue = 0.0;
             double green = 0.0;
@@ -140,11 +121,10 @@ namespace FinalProjectDavidMax
 
         
 
-        public Bitmap Laplacian3x3Filter(Bitmap sourceBitmap,
-                                                    bool grayscale = true)
+        public Bitmap Laplacian3x3Filter(Bitmap sourceBitmap)
         {
             Bitmap resultBitmap = ExtBitmap.ConvolutionFilter(sourceBitmap,
-                                    Matrix.Laplacian3x3, 1.0, 0, grayscale);
+                                    Matrix.Laplacian3x3, 1.0, 0);
 
             return resultBitmap;
         }
