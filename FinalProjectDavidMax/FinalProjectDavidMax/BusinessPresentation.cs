@@ -20,8 +20,7 @@ namespace FinalProjectDavidMax
         public Boolean iHaveException = false;
 
 
-
-        // Singleton
+        
         public BusinessPresentation(ILoad iLoad, ISave iSave, IExtBitmap extBitmap, IDisplay display)
         {
             this.display = display;
@@ -61,7 +60,7 @@ namespace FinalProjectDavidMax
             }
 
             // Get the image from the form
-            Bitmap workImage = display.getImage(picPreview);
+            workImage = display.getImage(picPreview);
 
             // If there is no image in the PictureBox, do nothing
             if (workImage == null)
@@ -98,26 +97,18 @@ namespace FinalProjectDavidMax
             {
                 // call function for get the image from the disk
                 workImage = iLoad.LoadImage();
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine("{0} First exception caught.", e);
-                iHaveException = true;
-            }
 
 
-            // If image is not null, put it in the form
-            try
-            {
+                // If image is not null, put it in the form
                 display.putImage(picPreview, workImage);
 
                 // Save the non filtered image - just in case we need it in a next release
                 originalBitmap = workImage;
             }
-            catch (ArgumentNullException e)
+            catch (Exception e)
             {
                 // If there is an exception in the filter, do nothing 
-                Console.WriteLine("{1} First exception caught.", e);
+                Console.WriteLine("Exception : ", e);
                 iHaveException = true;
             }
 
@@ -133,25 +124,15 @@ namespace FinalProjectDavidMax
             {
                 // Get the image from the form
                 Bitmap workImage = display.getImage(picPreview);
-                
+
+                // Save the image on the disk
+                iSave.SaveImage(workImage);
+
             }
             catch (Exception e)
             {
                 // If there is an exception in the filter, do nothing 
-                Console.WriteLine("{0} First exception caught.", e);
-                iHaveException = true;
-            }
-
-            // Save the image on the disk
-            try
-            {
-                iSave.SaveImage(workImage);
-
-            }
-            catch (ArgumentNullException e)
-            {
-                // If there is an exception in the filter, do nothing 
-                Console.WriteLine("{1} First exception caught.", e);
+                Console.WriteLine("Exception : ", e);
                 iHaveException = true;
             }
 

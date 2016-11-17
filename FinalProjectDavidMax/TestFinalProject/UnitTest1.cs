@@ -49,42 +49,7 @@ namespace TestFinalProject
 
 
 
-        // Test of the ClickFilter in Business layer
-        [TestMethod()]
-        public void TestClickFilter()
-        {
-            // Create a substitute for all interface
-            var display = Substitute.For<IDisplay>();
-            var extBitmap = Substitute.For<IExtBitmap>();
-            var iLoad = Substitute.For<ILoad>();
-            var iSave = Substitute.For<ISave>();
-            // Get the instance of BusinessPresentation
-            BusinessPresentation bp = new BusinessPresentation(iLoad, iSave, extBitmap, display);
-
-            // Get a fake picture from the form
-            PictureBox fakePictureBox = new PictureBox();
-            fakePictureBox.Image = Properties.Resources.firefox;
-            display.getImage(Arg.Any<PictureBox>()).Returns(fakePictureBox.Image);
-
-            // Apply the filter
-            bp.ClickFilter(fakePictureBox);
-
-            // Compare the result with a well filtered image
-            // Get the well filtered image
-            Bitmap controlPicture = Properties.Resources.firefox_filtered;
-
-            // Control the size of images
-            Assert.AreEqual(bp.FilteredBitmap.Size, controlPicture.Size);
-
-            // Control each pixel
-            for (int i = 0; i < controlPicture.Width; i++)
-            {
-                for (int j = 0; j < controlPicture.Height; j++)
-                {
-                    Assert.AreEqual(bp.FilteredBitmap.GetPixel(i, j), controlPicture.GetPixel(i, j));
-                }
-            }
-        }
+       
 
         // Test of the ClickFilter with a null picture box
         [TestMethod()]
@@ -216,7 +181,7 @@ namespace TestFinalProject
 
         //test method clickLoad with fake exception on putImage
         [TestMethod()]
-        public void TestClickLoadWithExcpetion()
+        public void TestClickLoadWithExcpetionNullException()
         {
             // Create a substitute for all interface
             var display = Substitute.For<IDisplay>();
@@ -233,7 +198,7 @@ namespace TestFinalProject
             //instructions to NSubstitute : Throw an exception
             display
                 .When(x => x.putImage(fakePictureBox, imageTemp))
-               .Do(x => { throw new ArgumentNullException(); });
+               .Do(x => { throw new Exception(); });
 
             bp.ClickLoad(fakePictureBox);
 
@@ -311,7 +276,7 @@ namespace TestFinalProject
             //instructions to NSubstitute : Throw an exception
             iSave
                 .When(x => x.SaveImage(imageTemp))
-               .Do(x => { throw new ArgumentNullException(); });
+               .Do(x => { throw new Exception(); });
 
             bp.ClickSave(fakePictureBox);
 
