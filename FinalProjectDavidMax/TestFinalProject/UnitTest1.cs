@@ -61,9 +61,6 @@ namespace TestFinalProject
             display.getImage(Arg.Any<PictureBox>()).Returns(fakePictureBox.Image);
 
             Assert.AreEqual("filter successfull applyied", bp.ClickFilter(fakePictureBox));
-            
-
-
         }
 
 
