@@ -62,6 +62,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BusinessPresentation.cs" />
+    <Compile Include="Display.cs" />
     <Compile Include="ExtBitmap.cs" />
     <Compile Include="IDisplay.cs" />
     <Compile Include="IExtBitmap.cs" />

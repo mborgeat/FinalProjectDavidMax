@@ -8,29 +8,25 @@ using System.Windows.Forms;
 
 namespace FinalProjectDavidMax
 {
-    public class BusinessPresentation : IDisplay
+    public class BusinessPresentation
     {
-        private static BusinessPresentation instance;
-        private static OutputInput outputInput;
         private static Bitmap originalBitmap = null;
         private Bitmap filteredBitmap = null;
         private IExtBitmap extBitmap;
+        private IDisplay display;
+        private ILoad iLoad;
+        private ISave iSave;
+        public Boolean iHaveException = false;
 
-       
+
 
         // Singleton
-        private BusinessPresentation()
+        public BusinessPresentation(ILoad iLoad, ISave iSave, IExtBitmap extBitmap, IDisplay display)
         {
-            outputInput = new OutputInput();
-            extBitmap = new ExtBitmap();
-        }
-
-        public static BusinessPresentation getInstance()
-        {
-            if (instance == null)
-                instance = new BusinessPresentation();
-
-            return instance;
+            this.display = display;
+            this.extBitmap = extBitmap;
+            this.iLoad = iLoad;
+            this.iSave = iSave;
         }
 
         // Getters and setters
@@ -64,7 +60,7 @@ namespace FinalProjectDavidMax
             }
 
             // Get the image from the form
-            Bitmap workImage = getImage(picPreview);
+            Bitmap workImage = display.getImage(picPreview);
 
             // If there is no image in the PictureBox, do nothing
             if (workImage == null)
@@ -76,6 +72,8 @@ namespace FinalProjectDavidMax
             {
                 // Apply the filter
                 workImage = extBitmap.Laplacian3x3Filter(workImage);
+                // Keep the filtered image in this
+                FilteredBitmap = workImage;
             }
             catch (Exception)
             {
@@ -84,10 +82,8 @@ namespace FinalProjectDavidMax
             }
            
             // Put the filtered image in the form
-            putImage(picPreview, workImage);
+            display.putImage(picPreview, workImage);
 
-            // Keep the filtered image in this
-            FilteredBitmap = workImage;
 
             return "filter successfull applyied";
         }
@@ -95,43 +91,68 @@ namespace FinalProjectDavidMax
         // Click on Load image
         public void ClickLoad(PictureBox picPreview)
         {
-            // Get the image from the disk
-            Bitmap workImage = outputInput.LoadImage();
+            iHaveException = false;
 
-            // If image is not null, put it in the form
-            if (workImage != null)
+            // Get the image from the disk
+            try
             {
-                putImage(picPreview, workImage);
+                // call function for get the image from the disk
+                Bitmap workImage = iLoad.LoadImage();
+                // If image is not null, put it in the form
+                display.putImage(picPreview, workImage);
+
+                // Save the non filtered image - just in case we need it in a next release
+                originalBitmap = workImage;
+            }
+            catch (ArgumentNullException e)
+            {
+                Console.WriteLine("{0} First exception caught.", e);
+                iHaveException = true;
+            }
+            catch (Exception e)
+            {
+                // If there is an exception in the filter, do nothing 
+                Console.WriteLine("in the exception", e);
+                iHaveException = true;
             }
 
-            // Save the non filtered image - just in case we need it in a next release
-            originalBitmap = workImage;
+           
         }
 
         public void ClickSave(PictureBox picPreview)
         {
-            ISave output = new OutputInput();
-            // Get the image from the form
-            Bitmap workImage = getImage(picPreview);
+            iHaveException = false;
 
-            // todo : if the image is null
+            // Get the image from the disk
+            try
+            {
+                // Get the image from the form
+                Bitmap workImage = display.getImage(picPreview);
 
-            // Save the image on the disk
-            output.SaveImage(workImage);
+                try
+                {
+                    // Save the image on the disk
+                    iSave.SaveImage(workImage);
+                }
+                catch (Exception e)
+                {
+                    // If there is an exception in the filter, do nothing 
+                    Console.WriteLine("in the exception", e);
+                    iHaveException = true;
+                }
+            }
+            catch (Exception e)
+            {
+                // If there is an exception in the filter, do nothing 
+                Console.WriteLine("in the exception", e);
+                iHaveException = true;
+            }
+
+            
+           
+
         }
 
-        // Methods overrided from IDisplay
-        // Method for getting the image from the form
-        public Bitmap getImage(PictureBox pictureBox)
-        {
-            return (Bitmap)pictureBox.Image;
-        }
-
-        // Method for sending the image to the form
-        public void putImage(PictureBox pictureBox, Bitmap image)
-        {
-            pictureBox.Image = image;
-        }
 
     }
 }

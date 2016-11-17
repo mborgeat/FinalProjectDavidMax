@@ -20,18 +20,19 @@ namespace FinalProjectDavidMax
         // Method for the on-click listener
         public void click(object sender, EventArgs e)
         {
+            BusinessPresentation myBusiness = new BusinessPresentation(new OutputInput(), new OutputInput(), new ExtBitmap(), new Display());
             switch (((Button)sender).Name) {
             
                 case "btnOpenOriginal" :
-                    BusinessPresentation.getInstance().ClickLoad(picPreview);
+                    myBusiness.ClickLoad(picPreview);
                     break;
 
                 case "btnSaveNewImage":
-                    BusinessPresentation.getInstance().ClickSave(picPreview);
+                    myBusiness.ClickSave(picPreview);
                     break;
 
                 case "btnFilter":
-                    BusinessPresentation.getInstance().ClickFilter(picPreview);
+                    myBusiness.ClickFilter(picPreview);
                     break;
 
             }
